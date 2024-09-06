@@ -2,20 +2,22 @@ import requests
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(
+    dotenv_path="/Users/user/Documents/code/PYTHON/periodic_fetch_automation/.env"
+)
 
 
-def send_request_to_url(url):
+def send_request_to_url(url: str) -> int | None:
     try:
         response = requests.get(url, timeout=120)
         return response.status_code
     except requests.ConnectionError:
-        return None, "No internet connection or URL unreachable."
+        return None
     except requests.RequestException as e:
-        return None, str(e)
+        return None
 
 
-def main():
+def main() -> None:
     url = os.getenv("URL")
 
     if not url:
