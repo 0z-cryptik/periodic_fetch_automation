@@ -3,19 +3,19 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv(
-    dotenv_path="/Users/user/Documents/code/PYTHON/periodic_fetch_automation/.env"
+    dotenv_path="/Users/user/code2/periodic_fetch_automation/.env"
 )
-
 
 def send_request_to_url(url: str) -> int | None:
     try:
         response = requests.get(url, timeout=120)
         return response.status_code
     except requests.ConnectionError:
-        return None
+        print("connection error")
+        return
     except requests.RequestException as e:
-        return None
-
+        print(f"error: {e}")
+        return
 
 def main() -> None:
     url = os.getenv("URL")
@@ -31,6 +31,6 @@ def main() -> None:
     else:
         print("Error sending request")
 
-
 if __name__ == "__main__":
     main()
+
